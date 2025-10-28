@@ -4,12 +4,15 @@ import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { X, CheckCircle2, AlertCircle, Info, AlertTriangle } from "lucide-react";
 
-export interface ToastProps {
+export interface ToastData {
   id: string;
   title?: string;
   description?: string;
   type?: "success" | "error" | "warning" | "info";
   duration?: number;
+}
+
+export interface ToastProps extends ToastData {
   onClose: (id: string) => void;
 }
 
@@ -40,51 +43,44 @@ export const Toast: React.FC<ToastProps> = ({
   };
 
   const styles = {
-    success: "bg-success text-success-foreground",
-    error: "bg-destructive text-destructive-foreground",
-    warning: "bg-warning text-warning-foreground",
-    info: "bg-primary text-primary-foreground",
+    success: "bg-green-500 text-white",
+    error: "bg-red-500 text-white",
+    warning: "bg-yellow-500 text-black",
+    info: "bg-blue-500 text-white",
   };
 
   return (
     <div
       className={cn(
-        "pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-300",
+        "pointer-events-auto flex w-full max-w-sm items-center gap-3 overflow-hidden rounded-lg shadow-lg ring-1 ring-black/10 transition-all duration-300 p-4",
         styles[type],
         isVisible
           ? "translate-x-0 opacity-100"
           : "translate-x-full opacity-0"
       )}
     >
-      <div className="p-4">
-        <div className="flex items-start">
-          <div className="flex-shrink-0">{icons[type]}</div>
-          <div className="ml-3 w-0 flex-1 pt-0.5">
-            {title && <p className="text-sm font-medium">{title}</p>}
-            {description && (
-              <p className="mt-1 text-sm opacity-90">{description}</p>
-            )}
-          </div>
-          <div className="ml-4 flex flex-shrink-0">
-            <button
-              className="inline-flex rounded-md hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2"
-              onClick={() => {
-                setIsVisible(false);
-                setTimeout(() => onClose(id), 300);
-              }}
-            >
-              <span className="sr-only">Close</span>
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
+      <div className="flex-shrink-0">{icons[type]}</div>
+      <div className="flex-1 min-w-0">
+        {title && <p className="text-sm font-semibold leading-tight">{title}</p>}
+        {description && (
+          <p className="text-sm leading-snug opacity-90">{description}</p>
+        )}
       </div>
+      <button
+        onClick={() => {
+          setIsVisible(false);
+          setTimeout(() => onClose(id), 300);
+        }}
+        className="flex-shrink-0 hover:opacity-75 focus:outline-none"
+      >
+        <X className="h-4 w-4" />
+      </button>
     </div>
   );
 };
 
 export interface ToastContainerProps {
-  toasts: ToastProps[];
+  toasts: ToastData[];
   onClose: (id: string) => void;
 }
 
@@ -93,7 +89,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
   onClose,
 }) => {
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+    <div className="fixed top-4 right-4 z-50 flex flex-col gap-3 pointer-events-none">
       {toasts.map((toast) => (
         <Toast key={toast.id} {...toast} onClose={onClose} />
       ))}
