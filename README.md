@@ -3,7 +3,7 @@
 A modern, interactive web application to visualize JSON data as hierarchical tree structures.
 
 ![Dark Mode](https://img.shields.io/badge/Theme-Dark%20%2F%20Light-blue)
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![Next.js](https://img.shields.io/badge/Next.js-14-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Tailwind](https://img.shields.io/badge/Tailwind-4-38bdf8)
 
