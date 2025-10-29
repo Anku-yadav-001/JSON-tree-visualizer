@@ -65,7 +65,7 @@ export default function Home() {
       <div className="min-h-screen bg-background">
         <Header />
 
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-6 py-8">
           <div className="text-center mb-8 animate-fade-in">
             <p className="text-muted-foreground max-w-full mx-auto">
               Paste your JSON data, visualize it as an interactive tree structure, and explore with powerful search capabilities
