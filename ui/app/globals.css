@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------
-   🌈 THEME SETUP (Tailwind v4 syntax)
---------------------------------------------- */
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
@@ -30,35 +27,32 @@
   --radius: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --success: 142.1 70.6% 45.3%;
-    --success-foreground: 144.9 80.4% 10%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 48 96% 89%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 142.1 70.6% 45.3%;
+  --success-foreground: 144.9 80.4% 10%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 48 96% 89%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 48%;
 }
 
-/* Tailwind v4 @theme binding */
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -86,9 +80,6 @@
   --radius: var(--radius);
 }
 
-/* ---------------------------------------------
-   🧩 BASE STYLES
---------------------------------------------- */
 * {
   border-color: var(--color-border);
 }
@@ -100,9 +91,6 @@ body {
   font-family: system-ui, sans-serif;
 }
 
-/* ---------------------------------------------
-   🕹️ React Flow custom styles
---------------------------------------------- */
 .react-flow__node {
   transition: all 0.2s ease;
 }
@@ -125,12 +113,18 @@ body {
   display: none;
 }
 
-/* ---------------------------------------------
-   🖱️ Custom Scrollbar
---------------------------------------------- */
+/* React Flow background for light mode */
+.react-flow__background {
+  background-color: #fafafa;
+}
+
+.dark .react-flow__background {
+  background-color: #1a1d2e;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -146,22 +140,6 @@ body {
   background: var(--color-foreground);
 }
 
-/* ---------------------------------------------
-   🎨 Gradient Backgrounds
---------------------------------------------- */
-.gradient-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .gradient-bg {
-    background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
-  }
-}
-
-/* ---------------------------------------------
-   🔁 Animation Keyframes
---------------------------------------------- */
 @keyframes pulse-ring {
   0%, 100% {
     transform: scale(1);
@@ -171,4 +149,32 @@ body {
     transform: scale(1.05);
     opacity: 0.75;
   }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
 }
