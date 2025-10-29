@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { toPng } from "html-to-image";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -50,4 +51,32 @@ export function debounce<T extends (...args: any[]) => any>(
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
+}
+
+export async function downloadAsImage(
+  elementId: string,
+  filename: string = "tree.png"
+): Promise<boolean> {
+  try {
+    const element = document.querySelector(`[data-id="${elementId}"]`) as HTMLElement;
+    if (!element) {
+      console.error("Element not found");
+      return false;
+    }
+
+    const dataUrl = await toPng(element, {
+      cacheBust: true,
+      backgroundColor: "#ffffff",
+    });
+
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = dataUrl;
+    link.click();
+
+    return true;
+  } catch (error) {
+    console.error("Failed to download image:", error);
+    return false;
+  }
 }
