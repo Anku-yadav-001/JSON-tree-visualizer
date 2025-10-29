@@ -22,6 +22,7 @@ const nodeTypes = {
 
 interface TreeVisualizationInnerProps {
   treeData: TreeData;
+  highlightedNodeId?: string;
   onNodeClick?: (nodeId: string, path: string) => void;
   onDownload?: () => void;
   onReset?: () => void;
@@ -29,13 +30,14 @@ interface TreeVisualizationInnerProps {
 
 const TreeVisualizationInner: React.FC<TreeVisualizationInnerProps> = ({
   treeData,
+  highlightedNodeId,
   onNodeClick,
   onDownload,
   onReset,
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(treeData.nodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(treeData.edges);
-  const { fitView } = useReactFlow();
+  const { fitView, getNode, setCenter } = useReactFlow();
 
   useEffect(() => {
     setNodes(treeData.nodes);
@@ -45,6 +47,18 @@ const TreeVisualizationInner: React.FC<TreeVisualizationInnerProps> = ({
       fitView({ padding: 0.2, duration: 300 });
     }, 50);
   }, [treeData, setNodes, setEdges, fitView]);
+
+  useEffect(() => {
+    if (highlightedNodeId) {
+      const node = getNode(highlightedNodeId);
+      if (node) {
+        setCenter(node.position.x, node.position.y, {
+          zoom: 1,
+          duration: 800,
+        });
+      }
+    }
+  }, [highlightedNodeId, getNode, setCenter]);
 
   const handleNodeClick = useCallback(
     (_event: React.MouseEvent, node: any) => {
@@ -90,6 +104,7 @@ const TreeVisualizationInner: React.FC<TreeVisualizationInnerProps> = ({
 
 interface TreeVisualizationProps {
   treeData: TreeData;
+  highlightedNodeId?: string;
   onNodeClick?: (nodeId: string, path: string) => void;
   onDownload?: () => void;
   onReset?: () => void;
