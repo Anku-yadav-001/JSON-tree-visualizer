@@ -42,6 +42,13 @@ export const useJSONTree = () => {
     setHighlightedNodeId(undefined);
   }, []);
 
+  const getNodeById = useCallback(
+    (nodeId: string) => {
+      return treeData.nodes.find((node) => node.id === nodeId);
+    },
+    [treeData.nodes]
+  );
+
   return {
     jsonData,
     treeRoot,
@@ -50,5 +57,6 @@ export const useJSONTree = () => {
     generateTree,
     highlightNode,
     clearTree,
+    getNodeById,
   };
 };
