@@ -128,4 +128,4 @@ Use JSON path format:
 
 ⭐ Star this repo if you find it helpful!
 
-**Live Demo**: [View Demo](https://json-tree-visualizer-ji6g.onrender.com/)
+**Live Demo**: [View Demo](https://dev-json-tree-visualizer.netlify.app/)
